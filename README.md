@@ -47,4 +47,59 @@ För att få VG på den här uppgiften så ska ni utöka programmet så att anv�
 
 Mer info går att hitta i uppgiftsbeksrivningen i Canvas.
 
-Lycka till!
+Lycka till! 
+
+<br>
+
+
+## ENGLISH 
+
+# U06 Recipe App
+
+This task involves building a recipe app that allows users to search for recipes and filter results, and (for VG - Very Good grade) save recipes they like in different lists. Both the backend and frontend of the application should be deployed and connected so they function together.
+
+## Get Familiar:
+
+In this task, you will get familiar with RecipeAPI, a project written in PHP/Laravel.
+
+Get familiar by reading through the code, setting up the program including migrations, seeding, and serving.
+
+Some steps:
+
+1. Start the dev container and then navigate to the terminal and cd into the correct folder.
+2. Run `composer update`.
+3. Change the .env.example file to .env.
+4. Run `php artisan key:generate`.
+5. Run `php artisan migrate` (to create the database).
+6. Run `php artisan db:seed`.
+7. Run `php artisan serve`.
+
+Then test the various requests you have access to by importing the file: "Insomnia_U06_requests.json" into your Insomnia client. You may need to register with Insomnia (e.g., using your Github account) to be able to import a file.
+
+When testing the API, you will need to extract the bearer tokens you receive upon login or registration and paste them into the Bearer field to access the API routes that require authentication.
+
+![Image](2023-03-14-12-46-36.png)
+
+Once you have the backend working and you feel you have a basic understanding of the code, you don't need to do anything more here at this point. Let the app run in the background with `php artisan serve` and focus now on building your frontend.
+
+## Building Frontend
+
+You will now focus on creating a frontend in Angular (outside your dev container, e.g., in another VSCode window) that will allow you to *search for and filter various recipes using an external API* such as [Edaman API](https://developer.edamam.com/edamam-docs-recipe-api) or [Spoonacular API](https://spoonacular.com/food-api) (you will need to register to access the API).
+
+You should also connect your frontend to the RecipeAPI backend. Create a page for the logged-in user and allow the user to log in and log out.
+
+## Deployment
+
+Once the frontend is ready, deploy both frontend (e.g., on [Netlify](https://www.netlify.com/)) and backend (e.g., on Vercel or Render). Once in production, these should be connected so they work harmoniously together.
+
+## Expand Frontend and Backend (VG - Very Good)
+
+To achieve a VG grade on this task, you should expand the program so that users can save recipes they like in different lists. For example, a user might want a list for BBQ, one for soups, and one for vegan food. You should then add necessary parts to accomplish this in both backend and frontend, including controllers and routes in the backend, and extra components, views, and services in the frontend (as well as changes in previous parts where necessary). The backend program is probably not perfect either, so feel free to make improvements there too if you find any.
+
+Even more additional details are welcome if time allows and to fully ensure your VG, such as improvements in already existing code, a polished UX/UI, and connections to more APIs.
+
+## More Info:
+
+More information can be found in the assignment description in Canvas.
+
+Good luck!
