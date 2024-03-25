@@ -10,7 +10,7 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'app-frontend-angular';
+  title = 'TastyTreasure';
   // data: any; 
 
   // formTitle = "";
