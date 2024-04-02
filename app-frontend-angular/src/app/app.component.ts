@@ -1,32 +1,26 @@
+import { AsyncPipe, CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { RecipesearchComponent } from '../app/recipesearch/recipesearch.component';
-// import { HttpClient } from '@angular/common/http';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { AuthService } from './services/auth.service';
+import { Observable } from 'rxjs';
+import { LoggedInUser } from './interfaces/loggedinuser';
+import { RecipesearchComponent } from './pages/recipesearch/recipesearch.component';
+import { LoginComponent } from './pages/login/login.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RecipesearchComponent],
+  imports: [CommonModule,RouterOutlet, RouterLink, RouterLinkActive, AsyncPipe, RecipesearchComponent, LoginComponent, FormsModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
   title = 'TastyTreasure';
-  // data: any; 
 
-  // formTitle = "";
+  loggedIn$: Observable<LoggedInUser>;
 
-  // constructor(private http: HttpClient) {
-  //   this.http.get('http://localhost:8000/api/form').subscribe((data:any) => {
-  //     this.data = data; 
-  //     console.log(this.data);
-  //   })
-  // }
-
-  // onSubmit() {
-  //   this.http.post('http://localhost:8000/api/form', {title: this.formTitle}).subscribe((data:any) => {
-  //     console.log(data);
-  //     this.data.push(data);
-  //   })
-  // }
+  constructor(private auth: AuthService) {
+    this.loggedIn$ = this.auth.loggedIn$;
+  }
 }

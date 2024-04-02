@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { RecipesearchService } from '../services/recipesearch.service';
-import { Recipe } from '../interfaces/recipe'; 
+import { RecipesearchService } from '../../services/recipesearch.service';
+import { Recipe } from '../../interfaces/recipe'; 
 import { FormsModule } from '@angular/forms';
 
 
