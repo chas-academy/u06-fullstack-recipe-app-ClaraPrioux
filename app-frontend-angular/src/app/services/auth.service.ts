@@ -49,6 +49,12 @@ export class AuthService {
     return this.http.get<User[]>(this.baseUrl+'getuser/2', this.httpOptions);
   }
 
+  registerUser(registerDetails: any): Observable<any> {
+    return this.http
+      .post<any>(this.baseUrl + 'register', registerDetails, this.httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
   private handleError(error: HttpErrorResponse) {
     if (error.status === 404) {
       console.error('An error occurred', error.error);

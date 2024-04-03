@@ -12,7 +12,6 @@
 
 namespace Fruitcake\Cors;
 
-use Fruitcake\Cors\Exceptions\InvalidOptionException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -195,7 +194,7 @@ class CorsService
         if ($response->headers->has('Access-Control-Allow-Origin')) {
             $this->configureAllowCredentials($response, $request);
 
-            $this->configureExposedHeaders($response, $request);
+            $this->configureAllowedMethods($response, $request);
         }
 
         return $response;
@@ -234,7 +233,7 @@ class CorsService
             $allowMethods = strtoupper((string) $request->headers->get('Access-Control-Request-Method'));
             $this->varyHeader($response, 'Access-Control-Request-Method');
         } else {
-            $allowMethods = implode(', ', $this->allowedMethods);
+            $allowMethods = 'GET, POST, OPTIONS, DELETE, PUT';
         }
 
         $response->headers->set('Access-Control-Allow-Methods', $allowMethods);
