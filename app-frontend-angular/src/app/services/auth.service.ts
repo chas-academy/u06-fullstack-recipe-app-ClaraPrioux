@@ -8,6 +8,7 @@ import { BehaviorSubject, Observable, catchError, throwError, of } from 'rxjs';
 import { Logindetails } from '../interfaces/logindetails';
 import { User } from '../interfaces/user';
 import { LoggedInUser } from '../interfaces/loggedinuser';
+import { Registerdetails } from '../interfaces/registerdetails';
 
 @Injectable({
   providedIn: 'root',
@@ -49,7 +50,7 @@ export class AuthService {
     return this.http.get<User[]>(this.baseUrl+'getuser/2', this.httpOptions);
   }
 
-  registerUser(registerDetails: any): Observable<any> {
+  registerUser(registerDetails: Registerdetails): Observable<any> {
     return this.http
       .post<any>(this.baseUrl + 'register', registerDetails, this.httpOptions)
       .pipe(catchError(this.handleError));

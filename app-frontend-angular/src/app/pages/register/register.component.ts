@@ -1,63 +1,45 @@
 import { Component } from '@angular/core';
 import { Registerdetails } from '../../interfaces/registerdetails';
 import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, HttpClientModule, CommonModule],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.css'
+  styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-  registerDetails: Registerdetails;
-  registerForm!: FormGroup;
+  registerDetails: Registerdetails; 
 
-  constructor(private auth: AuthService, private router: Router, private formBuilder: FormBuilder) {
+  isSuccessful = false;
+  isSignUpFailed = false;
+  errorMessage = '';
+
+  constructor(private authService: AuthService) { 
     this.registerDetails = {
-      name: '',
+      name: '', 
       email: '',
       password: '',
-      password_confirmation: '',
+      password_confirmation: ''
     };
   }
 
-  ngOnInit(): void {
-    this.initForm();
-  }
-
-  private initForm(): void {
-    this.registerForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      password_confirmation: ['', Validators.required]
-    });
-  }
-
   register(): void {
-    if (this.registerForm.invalid) {
-      return;
-    }
 
-    const registerDetails: Registerdetails = this.registerForm.value;
-
-    this.auth.registerUser(registerDetails).subscribe(
-      (result) => {
-        console.log(result);
-        this.handleSuccessfulRegistration(result.token);
+    this.authService.registerUser(this.registerDetails).subscribe({
+      next: (data: any) => {
+        console.log(data);
+        this.isSuccessful = true;
+        this.isSignUpFailed = false;
       },
-      (error) => {
-        console.error('Registration error:', error);
-        // Handle specific error messages or show generic message to the user
+      error: (err: { error: { message: string; }; }) => {
+        this.errorMessage = err.error.message;
+        this.isSignUpFailed = true;
       }
-    );
-  }
-
-  private handleSuccessfulRegistration(token: string): void {
-    localStorage.setItem('token', token);
-    this.router.navigate(['/']);
+    });
   }
 }
