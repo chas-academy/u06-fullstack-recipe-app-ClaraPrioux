@@ -48,10 +48,6 @@ export class LoginComponent {
       }
     );
   }
-
-  logout(){
-    this.auth.logoutUser();
-  }
 }
 
 
