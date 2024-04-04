@@ -17,6 +17,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class AppComponent {
   title = 'TastyTreasure';
+  isMobileMenuOpen = false;
 
   loggedIn$: Observable<LoggedInUser>;
 
@@ -26,6 +27,10 @@ export class AppComponent {
 
   logoutUser(){
     this.auth.logout();
+  }
+
+  toggleMobileMenu() {
+    this.isMobileMenuOpen = !this.isMobileMenuOpen;
   }
 
 }
