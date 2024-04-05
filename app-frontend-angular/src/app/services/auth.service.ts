@@ -28,7 +28,7 @@ export class AuthService {
   private errorMessageSubject = new BehaviorSubject<string>('');
   errorMessage$ = this.errorMessageSubject.asObservable();
 
-  private baseUrl = 'http://localhost:8000/api/'; 
+  private baseUrl = 'https://u06-fullstack-recipe-app-claraprioux.onrender.com/api/'; 
 
   private httpOptions = {
     headers: new HttpHeaders({
