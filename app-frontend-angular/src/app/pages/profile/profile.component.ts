@@ -1,17 +1,21 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../interfaces/user';
+import { Observable } from 'rxjs';
+import { LoggedInUser } from '../../interfaces/loggedinuser';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [],
+  imports: [AsyncPipe],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
 export class ProfileComponent {
 
   user: User;
+  loggedIn$: Observable<LoggedInUser>;
 
   constructor(private auth: AuthService){
     this.user = {
@@ -19,6 +23,7 @@ export class ProfileComponent {
       name:"",
       email:""
     }
+    this.loggedIn$ = this.auth.loggedIn$;
   }
 
   getUser(){
