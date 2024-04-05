@@ -71,11 +71,8 @@
 </nav>
 
 <!-- MAIN -->
-@if((loggedIn$ | async)?.loginState ){
-  <li>Logged in as {{(loggedIn$ | async)?.user?.name}}</li>
-} @else {<li>Not logged in</li>}
-<app-recipesearch></app-recipesearch>
-<router-outlet />
+
+<router-outlet></router-outlet>
 
 
 <!-- FOOTER -->

@@ -16,6 +16,8 @@ import { CommonModule } from '@angular/common';
 
 export class LoginComponent {
   loginDetails: Logindetails;
+  errorMessage: string | undefined;
+  
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -27,6 +29,12 @@ export class LoginComponent {
       email: '',
       password: '',
     };
+  }
+
+  ngOnInit(): void {
+    this.auth.errorMessage$.subscribe(message => {
+      this.errorMessage = message;
+    });
   }
 
   login(){

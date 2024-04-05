@@ -2,3 +2,7 @@
 <!-- 
 <button (click)="getUser()">Get a user</button>
 <p>{{user.name}}</p> -->
+
+@if((loggedIn$ | async)?.loginState ){
+    <li>Logged in as {{(loggedIn$ | async)?.user?.name}}</li>
+  } @else {<li>Not logged in</li>}

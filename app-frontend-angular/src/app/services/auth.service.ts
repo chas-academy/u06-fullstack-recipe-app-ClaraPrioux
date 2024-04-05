@@ -24,6 +24,10 @@ export class AuthService {
   errors: boolean = false;
   errorMessage: string = '';
 
+  // Observable for error message
+  private errorMessageSubject = new BehaviorSubject<string>('');
+  errorMessage$ = this.errorMessageSubject.asObservable();
+
   private baseUrl = 'http://localhost:8000/api/'; 
 
   private httpOptions = {
@@ -45,9 +49,11 @@ export class AuthService {
     return this.http
       .post<any>(this.baseUrl + 'login', loginDetails, this.httpOptions)
       .pipe(
-        catchError(this.handleError),
+        catchError((error: HttpErrorResponse) => {
+          this.handleError(error);
+          return throwError(() => new Error('Something bad happened; please try again later'));
+        }),
         tap(response => {
-          // Assuming the response contains the user and login state information
           this.updateLoginState({
             user: response.user,
             loginState: true
@@ -65,7 +71,10 @@ export class AuthService {
   registerUser(registerDetails: Registerdetails): Observable<any> {
     return this.http
       .post<any>(this.baseUrl + 'register', registerDetails, this.httpOptions)
-      .pipe(catchError(this.handleError));
+      .pipe(catchError((error: HttpErrorResponse) => {
+        this.handleError(error);
+        return throwError(() => new Error('Something bad happened; please try again later'));
+      }))
   }
 
   logout(){
@@ -78,16 +87,15 @@ export class AuthService {
   }
 
   private handleError(error: HttpErrorResponse) {
+    let errorMessage = '';
     if (error.status === 404) {
-      console.error('An error occurred', error.error);
+      errorMessage = 'An error occurred: ' + error.error;
+    } else if (error.status === 401) {
+      errorMessage = `Wrong email or password`;
     } else {
-      console.error(
-        `Backend returned code ${error.status}, body was `,
-        error.error
-      );
+      errorMessage = `Backend returned code ${error.status}, body was ${error.error}`;
     }
-    return throwError(
-      () => new Error('Something bad happened; please try again later')
-    );
+    console.error(errorMessage);
+    this.errorMessageSubject.next(errorMessage);
   }
 }
