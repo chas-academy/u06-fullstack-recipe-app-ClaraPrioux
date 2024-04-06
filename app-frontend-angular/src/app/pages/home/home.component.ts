@@ -4,11 +4,13 @@ import { LoggedInUser } from '../../interfaces/loggedinuser';
 import { Observable } from 'rxjs';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { RecipesearchService } from '../../services/recipesearch.service';
+import { RecipesearchComponent } from '../recipesearch/recipesearch.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [AsyncPipe],
+  imports: [AsyncPipe, RecipesearchComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -17,14 +19,16 @@ export class HomeComponent {
   recipes?: any;
   searchterm = "Popular";
   randomRecipe: any;
+  mealType = "Dinner";
+  health = "low-sugar";
   
-  constructor(private auth: AuthService, private recipesearchService: RecipesearchService) {
+  constructor(private auth: AuthService, private recipesearchService: RecipesearchService, private router: Router) {
     this.loggedIn$ = this.auth.loggedIn$;
     this.searchRecipe();
   }
 
   searchRecipe() {
-    this.recipesearchService.getRecipes(this.searchterm).subscribe(res=> {
+    this.recipesearchService.getRecipes(this.searchterm, this.mealType, this.health).subscribe(res=> {
       console.log(res);
       let recipeArray: any[];
       recipeArray = res.hits;
@@ -44,5 +48,8 @@ export class HomeComponent {
       this.recipes = recipes;
 
     })
+    }
+    redirectToSearch() {
+      this.router.navigate(['/search']);
     }
   }

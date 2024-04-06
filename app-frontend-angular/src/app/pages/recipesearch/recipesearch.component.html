@@ -1,20 +1,139 @@
-<h2 class="text-3xl font-bold underline">recipesearch works!</h2>
+<!-- SEARCH BAR -->
+<div class="flex justify-center items-center bg-cover bg-center p-8 mx-auto">
+    <div class="bg-white bg-opacity-90 shadow-lg rounded-lg p-8 w-10/12 max-w-xl" style="background-image: url('/assets/background-recipesearch.jpeg')">
+      @if((loggedIn$ | async)?.loginState ){
+          <h1 class="font-bold text-black text-center sm:text-3xl">Hi {{(loggedIn$ | async)?.user?.name}}! Welcome to TastyTreasure, <br>Your Ultimate Recipe Destination!</h1>
+        } @else {<h1 class="font-bold text-black text-center sm:text-3xl">Welcome to TastyTreasure, <br>Your Ultimate Recipe Destination!</h1>}
+        <p class="text-center text-gray-700 mb-6">Discover an abundance of food and recipes for all occasions! Whether you're whipping up a quick lunch or hosting a dinner party, there's something for everyone.</p>
+  
+        <form class="max-w-md mx-auto relative">
+            <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+            <div class="relative">
+                <!-- Search icon -->
+                <div class="absolute inset-y-0 start-0 flex items-center pl-3 pointer-events-none">
+                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                    </svg>
+                </div>
+                <!-- Search input -->
+                <input type="text" [(ngModel)]="searchterm" id="default-search" class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search with keywords, chicken, zucchini,..." required [ngModelOptions]="{standalone: true}" />
+        
+            </div>
+        
+            <!-- Type of meal -->
+            <ul class="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white mt-6">
+                <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+                    <div class="flex items-center ps-3">
+                        <input id="horizontal-list-radio-license" type="radio" value="breakfast" name="identification" [(ngModel)]="mealType" [ngModelOptions]="{standalone: true}" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                        <label for="horizontal-list-radio-license" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Breakfast</label>
+                    </div>
+                </li>
+                <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+                    <div class="flex items-center ps-3">
+                        <input id="horizontal-list-radio-id" type="radio" value="lunch" name="identification" [(ngModel)]="mealType" [ngModelOptions]="{standalone: true}" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                        <label for="horizontal-list-radio-id" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Lunch</label>
+                    </div>
+                </li>
+                <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+                    <div class="flex items-center ps-3">
+                        <input id="horizontal-list-radio-military" type="radio" value="dinner" name="identification" [(ngModel)]="mealType" [ngModelOptions]="{standalone: true}"class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                        <label for="horizontal-list-radio-military" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Dinner</label>
+                    </div>
+                </li>
+            </ul>
+        
+            <!-- Allergens -->
+            <div class="relative mt-4">
+                <input type="text" list="allergens" [(ngModel)]="health" placeholder="Type or select an allergen, dietary preference, or restriction" class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" [ngModelOptions]="{standalone: true}">
+                <datalist id="allergens">
+                    <option value="alcohol-free">
+                        <option value="celery-free">
+                        <option value="crustacean-free">
+                        <option value="dairy-free">
+                        <option value="egg-free">
+                        <option value="fish-free">
+                        <option value="fodmap-free">
+                        <option value="gluten-free">
+                        <option value="low-sugar">
+                        <option value="mollusk-free">
+                        <option value="no-oil-added">
+                        <option value="peanut-free">
+                        <option value="pork-free">
+                        <option value="vegan">
+                        <option value="vegetarian">
+                </datalist>
+            </div>
+            <button type="button" (click)="searchRecipe()" class="text-white bg-black hover:bg-grey-300 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mt-6">Search</button>
 
-<!-- <input type="text" [(ngModel)]="searchterm"> -->
-<button (click)="searchRecipe()">Get recipes</button>
+        </form>
+        
+    </div>
+  </div>
 
-@for (recipe of recipes; track recipe) {
-    <article>
-        <h3>{{ recipe.label }}</h3>
-        <img src="{{ recipe.image }}">
-        <p>{{ recipe.totalTime }}</p>
-        <p>{{ recipe.self }}</p>
-        <ul>
-            @for (ingredientLine of recipe.ingredientLines; track ingredientLine) {
-                <li>{{ingredientLine}}</li>
-            }
-        </ul>
-    </article>
-} @empty {
-    <p>There are no recipes.</p>
+<!-- CATEGORIES -->
+<h2 class="font-bold text-black text-center sm:text-2xl mx-auto mb-9">Most popular</h2>
+<div class="flex flex-wrap justify-center">  
+  <button type="button" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Breakfast</button>
+  <button type="button" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Chicken</button>
+  <button type="button" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Apple</button>
+  <button type="button" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Vegetarian</button>
+  <button type="button" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Lunch</button>
+</div>
+<div class="flex flex-wrap justify-center mb-9">
+  <button type="button" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Vegan</button>
+  <button type="button" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Gluten free</button>
+  <button type="button" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Fish</button>
+</div>
+
+<!-- RECIPES -->
+<!-- main container -->
+<div class="container mx-auto p-4" id="recipesContainer">
+    <!-- recipe card grid-->
+    <div class="grid gap-4 gap-y-8 md:grid-cols-2 lg:grid-cols-3 mb-16">
+
+    <!-- card -->
+    <!-- @for (recipe of recipes; track recipe) { -->
+        <div class="bg-white rounded-md overflow-hidden relative shadow-md" *ngFor="let recipe of getDisplayedRecipes()">
+            <div>
+                <img class="w-full" src="{{ recipe.image }}" alt="Recipe image">
+            </div>
+            <div class="p-4">
+                <h3 class="text-xl text-black">{{ recipe.label }}</h3>
+                <div class="flex justify-between mt-2 mb-2 text-gray-500"> 
+                    <div class="flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> 
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span class="ml-1 text-sm lg:text-base">{{ recipe.totalTime }}</span>
+                    </div>
+                    <div class="flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                            <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd" />
+                        </svg>
+                        <span class="ml-1 text-sm lg:text-base">{{ recipe.length }}</span> 
+                    </div>
+                </div>
+                <a href="{{ recipe.url }}">
+                    <button class="text-white bg-black p-2 rounded-md w-full uppercase text-sm lg:text-base">View Recipe</button>
+                </a>
+            </div>
+        </div>        
+    <!-- } -->
+    </div>
+</div>
+
+@if (!showAllRecipes && recipes && recipes.length > initialDisplayCount) {
+<div
+class="fter:h-px my-24 flex items-center before:h-px before:flex-1  before:bg-gray-300 before:content-[''] after:h-px after:flex-1 after:bg-gray-300  after:content-['']">
+<button type="button" (click)="toggleRecipesVisibility()"
+    class="flex items-center rounded-full border border-gray-300 bg-secondary-50 px-3 py-2 text-center text-sm font-medium text-gray-900 hover:bg-gray-100">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="mr-1 h-4 w-4">
+        <path fill-rule="evenodd"
+            d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+            clip-rule="evenodd" />
+    </svg>
+    View More
+</button>
+</div>
 }
