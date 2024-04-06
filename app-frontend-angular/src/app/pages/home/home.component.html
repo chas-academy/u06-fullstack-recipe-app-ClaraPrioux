@@ -1,8 +1,79 @@
-<p>home works!</p>
-<!-- 
-<button (click)="getUser()">Get a user</button>
-<p>{{user.name}}</p> -->
+<div class="flex justify-center items-center bg-cover bg-center p-8 mx-auto">
+  <div class="bg-white bg-opacity-90 shadow-lg rounded-lg p-8 w-10/12 max-w-xl" style="background-image: url('/assets/background-recipesearch.jpeg')">
+    @if((loggedIn$ | async)?.loginState ){
+        <h1 class="font-bold text-black text-center sm:text-3xl">Hi {{(loggedIn$ | async)?.user?.name}}! Welcome to TastyTreasure, <br>Your Ultimate Recipe Destination!</h1>
+      } @else {<h1 class="font-bold text-black text-center sm:text-3xl">Welcome to TastyTreasure, <br>Your Ultimate Recipe Destination!</h1>}
+      <p class="text-center text-gray-700 mb-6">Discover an abundance of food and recipes for all occasions! Whether you're whipping up a quick lunch or hosting a dinner party, there's something for everyone.</p>
 
-@if((loggedIn$ | async)?.loginState ){
-    <li>Logged in as {{(loggedIn$ | async)?.user?.name}}</li>
-  } @else {<li>Not logged in</li>}
+    <form class="max-w-md mx-auto">   
+        <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+        <div class="relative">
+            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                </svg>
+            </div>
+            <input type="search" id="default-search" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search with keywords, chicken, zucchini,..." required />
+            <button type="submit" class="text-white absolute end-2.5 bottom-2.5 bg-black hover:bg-grey-300 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+        </div>
+    </form>
+  </div>
+</div>
+
+
+<h2 class="font-bold text-black text-center sm:text-2xl mx-auto">Most popular</h2>
+
+
+  <div class="flex space-between mt-4 p-4">
+    @for (recipe of recipes.slice(0, 4); track recipe) {
+    <div class="max-w-xs bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+      <a href="{{ recipe.url }}">
+        <img class="p-4 rounded-t-sm w-3/4 h-3/4 items-center" src="{{ recipe.image }}" alt="product image" />
+      </a>
+      <div class="px-5 pb-5">
+        <a href="{{ recipe.url }}">
+          <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{{ recipe.label }}</h5>
+        </a>
+      </div>
+    </div>
+  }
+  </div>
+
+@if(recipes.length === 0) {
+  <p>There are no recipes.</p>
+}
+
+<h2 class="font-bold text-black text-center sm:text-2xl mb-6">Recipe of the week</h2>
+<div class="w-3/5 mx-auto mb-6 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+  @for (recipe of recipes.slice(7,8); track recipe) {
+    <div class="bg-white rounded-md overflow-hidden relative shadow-md flex">
+      <div class="w-1/2">
+        <img class="w-full" src="{{ recipe.image }}" alt="Recipe Title">
+      </div>
+      <div class="w-1/2 p-4">
+        <a href="{{ recipe.url }}">
+          <h2 class="text-2xl text-green-400  mb-6">{{ recipe.label }}</h2>
+        </a>
+          <div class="flex items-center  mb-6">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span class="ml-1 lg:text-xl">{{ recipe.totalTime }}</span>
+          </div>
+          <div class="flex items-center mb-6">
+            <ul>
+              @for (ingredientLine of recipe.ingredientLines.slice(0,3); track ingredientLine) {
+                  <li>{{ingredientLine}}</li>
+              }
+              <li>...</li>
+            </ul>
+          </div>
+        
+        
+      <a href="{{ recipe.url }}" class="text-white bg-black hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">View Recipe</a>
+
+      </div>
+    </div>
+    
+  }
+</div>
