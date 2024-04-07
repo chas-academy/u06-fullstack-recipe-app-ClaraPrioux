@@ -114,7 +114,7 @@
                         <span class="ml-1 text-sm lg:text-base">{{ recipe.length }}</span> 
                     </div>
                 </div>
-                <a href="{{ recipe.url }}">
+                <a [routerLink]="['/recipes', recipe.self]">
                     <button class="text-white bg-black p-2 rounded-md w-full uppercase text-sm lg:text-base">View Recipe</button>
                 </a>
             </div>

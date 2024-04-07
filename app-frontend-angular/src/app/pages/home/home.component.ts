@@ -50,6 +50,6 @@ export class HomeComponent {
     })
     }
     redirectToSearch() {
-      this.router.navigate(['/search']);
+      this.router.navigate(['/recipes']);
     }
   }

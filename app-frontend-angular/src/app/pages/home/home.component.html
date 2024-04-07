@@ -21,11 +21,11 @@
 </div>>
 
 
-<h2 class="font-bold text-black text-center sm:text-2xl mx-auto">Most popular</h2>
+<h2 class="font-bold text-black text-center sm:text-2xl mx-auto">Suggested recipes</h2>
 
 
-  <div class="flex space-between mt-4 p-4">
-    @for (recipe of recipes.slice(0, 4); track recipe) {
+  <div class="flex space-between mt-4 p-4 flex-wrap mx-auto justify-center mb-12">
+    @for (recipe of recipes.slice(0, 3); track recipe) {
     <div class="max-w-xs bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       <a href="{{ recipe.url }}">
         <img class="p-4 rounded-t-sm w-3/4 h-3/4 items-center" src="{{ recipe.image }}" alt="product image" />
@@ -44,7 +44,7 @@
 }
 
 <h2 class="font-bold text-black text-center sm:text-2xl mb-6">Recipe of the week</h2>
-<div class="w-3/5 mx-auto mb-6 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+<div class="w-3/5 mx-auto mb-6 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex-wrap">
   @for (recipe of recipes.slice(4,5); track recipe) {
     <div class="bg-white rounded-md overflow-hidden relative shadow-md flex">
       <div class="w-1/2">

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Recipe } from '../interfaces/recipe';
 
 @Injectable({
   providedIn: 'root'
@@ -22,5 +23,10 @@ export class RecipesearchService {
   getRecipes(searchterm: string, mealType: string, health: string): Observable<any> {
     let url = this.baseUrl + "&q=" + searchterm + "&app_id=" + this.app_id + "&app_key=" + this.app_key+ "&health=" + health + "&mealType=" + mealType;
     return this.http.get<any[]>(url, this.httpOptions);  
+  }
+
+  getRecipeBySelf(recipeSelf: string): Observable<any> {
+    let url = recipeSelf;
+    return this.http.get<any[]>(url);
   }
 }

@@ -7,12 +7,13 @@ import { LoggedInUser } from '../../interfaces/loggedinuser';
 import { Observable } from 'rxjs';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { ElementRef } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 
 @Component({
   selector: 'app-recipesearch',
   standalone: true,
-  imports: [FormsModule, AsyncPipe, CommonModule],
+  imports: [FormsModule, AsyncPipe, CommonModule, RouterModule],
   templateUrl: './recipesearch.component.html',
   styleUrl: './recipesearch.component.css'
 })
