@@ -19,7 +19,7 @@ I have developed a full-stack application that allows users to load, manage, and
 
 ### User Accounts
 
-- Users can create an account, log in, and log out.
+- Users can create an account, log in, and log out. OBS: Login function may load slowly the first time.
 - Authentication and authorization are managed using Laravel Sanctum.
 
 ## Project Approach
